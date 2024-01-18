@@ -3,7 +3,7 @@ FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04
 ARG DEBIAN_FRONTEND=noninteractive
 ARG TZ=UTC
 ARG MINICONDA_VERSION=23.5.0-3
-ARG PYTHON_VERSION=3.10
+ARG PYTHON_VERSION=3.11
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update
@@ -17,10 +17,10 @@ USER user
 ENV HOME=/home/user
 WORKDIR $HOME
 RUN mkdir $HOME/.cache $HOME/.config && chmod -R 777 $HOME
-RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py310_$MINICONDA_VERSION-Linux-x86_64.sh
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py311_$MINICONDA_VERSION-Linux-x86_64.sh
 RUN ls -lah
-RUN chmod +x ./Miniconda3-py310_$MINICONDA_VERSION-Linux-x86_64.sh
-RUN ./Miniconda3-py310_$MINICONDA_VERSION-Linux-x86_64.sh -b -p /home/user/miniconda
+RUN chmod +x ./Miniconda3-py311_$MINICONDA_VERSION-Linux-x86_64.sh
+RUN ./Miniconda3-py311_$MINICONDA_VERSION-Linux-x86_64.sh -b -p /home/user/miniconda
 ENV PATH="$HOME/miniconda/bin:$PATH"
 RUN conda init
 RUN conda install python=$PYTHON_VERSION

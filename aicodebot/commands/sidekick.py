@@ -9,7 +9,7 @@ from aicodebot.output import OurMarkdown, RichLiveCallbackHandler, get_console
 from aicodebot.prompts import generate_files_context, get_prompt
 from rich.live import Live
 from rich.panel import Panel
-import click, sys
+import click, sys, os
 
 
 @click.command()
@@ -36,17 +36,20 @@ def sidekick(apply, request, no_files, max_file_tokens, files):  # noqa: PLR0915
 
     if files:  # User supplied list of files
         context = generate_files_context(files)
-    elif not no_files:
-        # Determine which files to use for context automagically, with git
-        session_data = Session.read()
-        if session_data.get("files"):
-            console.print("Using files from the last session for context.", style="dim")
-            files = session_data["files"]
-        else:
-            console.print("Using recent git commits and current changes for context.", style="dim")
-            files = Coder.auto_file_context(DEFAULT_CONTEXT_TOKENS, max_file_tokens)
+    # CHANGE THIS TO USE DIRECTORY TO RESET FILES OR TREAT MISSING FILE AS RESET FILES
 
-        context = generate_files_context(files)
+    # elif not no_files:
+    #     # Determine which files to use for context automagically, with git
+    #     session_data = Session.read()
+    #     console.print(session_data.get("files"), session_data.get("path"), os.getcwd())
+    #     if len(session_data.get("files")) > 0 & (session_data.get("path")[0] == os.getcwd()):
+    #         console.print("Using files from the last session for context.", style="dim")
+    #         files = session_data["files"]
+    #     else:
+    #         console.print("Using recent git commits and current changes for context.", style="dim")
+    #         files = Coder.auto_file_context(DEFAULT_CONTEXT_TOKENS, max_file_tokens)
+
+    #     context = generate_files_context(files)
     else:
         context = generate_files_context([])
 
