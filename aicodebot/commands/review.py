@@ -28,7 +28,7 @@ def review(commit, output_format, response_token_size, files):
 
     diff_context = Coder.git_diff_context(commit, files)
     if not diff_context:
-        console.print("No changes detected for review. 🤷")
+        console.print("No changes detected for review. 🤷 Try looking at your last commit using 'HEAD' as the hash.")
         return
     languages = ",".join(Coder.identify_languages(files))
 
